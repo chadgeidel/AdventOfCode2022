@@ -6,11 +6,13 @@ namespace AdventOfCode2022
     {
         /// read file and get the calories in the elf 
         ///  with the most calories in their backpack
-        public static int ReadAndProcessFile()
+         public static int TopCaloriesOfElves(int numElves)
         {
             // assuming one elf doesn't have 2 billion calories in his bag
-            var biggestCalorieBag = 0;
+            var elfCalorieBags = new Dictionary<int, int>();
+            var elfNumber = 1;
             var currentCalorieBag = 0;
+
             using (StreamReader sr = new StreamReader("day1\\elf-calories.txt"))
             {
                 var line = sr.ReadLine();
@@ -25,10 +27,9 @@ namespace AdventOfCode2022
                     else
                     {
                         // empty line, new elf
-                        if (currentCalorieBag > biggestCalorieBag)
-                        {
-                            biggestCalorieBag = currentCalorieBag;
-                        }
+                        elfCalorieBags.Add(elfNumber, currentCalorieBag);
+                        elfNumber++;
+
                         // reset calorie bag
                         currentCalorieBag = 0;
                     }
@@ -39,7 +40,11 @@ namespace AdventOfCode2022
                     line = sr.ReadLine();
                 }
             }
-            return biggestCalorieBag;
+
+            // return the calories of the top N elves
+            return elfCalorieBags.OrderByDescending(v => v.Value)
+                                .Take(numElves)
+                                .Sum(v => v.Value);
         }
     }
 }
