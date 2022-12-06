@@ -12,4 +12,6 @@ Console.WriteLine();
 
 // Day two
 Console.WriteLine("Day 2");
+var totalScore = RpsStrategy.RpsScore();
+Console.WriteLine($"The strategy score is {totalScore}");
 Console.WriteLine();
